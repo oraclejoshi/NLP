@@ -10,6 +10,9 @@ public class Main {
 			post("/hello/", (request, response) -> {
 			    return Sentiment.findSentiment(request.body());
 			});
+			get("/hello/:name", (request, response) -> {
+				 return Sentiment.findSentiment(request.params("name"));
+			});
 			
 		}catch(Exception e){
 			e.printStackTrace();
