@@ -7,18 +7,12 @@ import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
 import edu.stanford.nlp.trees.Tree;
 import edu.stanford.nlp.util.CoreMap;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
-import java.util.regex.Pattern;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
 import java.io.*;
 
 
-public class Sentiment {
+public class New {
 	static StanfordCoreNLP pipeline;
 	
 	public static void init(){
@@ -27,64 +21,46 @@ public class Sentiment {
 	      pipeline = new StanfordCoreNLP(props);
 		
 	}
-	JSONObject  getPerson(String sentence, String sentiment){
-		   JSONObject person = new JSONObject();
-		   person .put("sentence", sentence);
-		   person .put("sentiment", sentiment);
-		   return person ;
-		} 
-
-	 public static JSONArray findSentiment(String line) {
-		 String[] s =  line.split(Pattern.quote("but"));
-		 line = line.replaceAll("but", ".");
-		 for(String ss: s) {
-			 System.out.println(ss);
-		 }
-            int jsonval = 0;
+	 public static String findSentiment(String line) {
+   
 	        int mainSentiment=0;
-	        JSONArray arr = new JSONArray();
-	        
-	        
+
 	        if(line != null && line.length()>0){
 	            int longest = 0;
-	            //System.out.println(line);
-		  	      Annotation annotation = new Annotation(line);
-
-	           // Annotation annotation = pipeline.process(line);
-		  	      pipeline.annotate(annotation);
-		  	    List<CoreMap> sentences = annotation.get(SentencesAnnotation.class);
-		  	    
-System.out.println(sentences);
-	            for (CoreMap sentence : sentences ) {
-	    	        JSONObject obj = new JSONObject();
-	            	//System.out.println(sentence);
-	            	System.out.println("================");
+	            System.out.println(line);
+		  	      //String lcInput = line.toString().toLowerCase(); // downcase everything.	
+		            Annotation annotation = pipeline.process(line);
+System.out.println(annotation.get(CoreAnnotations.SentencesAnnotation.class));
+	            List<CoreMap> sentences = annotation.get(CoreAnnotations.SentencesAnnotation.class);
+	            System.out.println(sentences.toString());
+	            for (CoreMap sentence : sentences) {
+	                Tree tree =	sentence.get(SentimentCoreAnnotations.SentimentAnnotatedTree.class);
+	                System.out.println(tree);
+	                int sentiment = RNNCoreAnnotations.getPredictedClass(tree);
+	                System.out.println(sentiment);
+	                String partText = sentence.toString();
+	                System.out.println(partText);
+	                if (partText.length() > longest) {
+	                    mainSentiment = sentiment;
+	                    System.out.println(+sentiment+" "+partText.length());
+	                   // longest = partText.length();
+	                    System.out.println(mainSentiment);
+	                    if(mainSentiment<2) {break;}
+	                }
+	            }
+	         /*   for (CoreMap sentence :annotation.get(CoreAnnotations.SentencesAnnotation.class )) {
 	                Tree tree =	sentence.get(SentimentCoreAnnotations.SentimentAnnotatedTree.class);
 	                int sentiment = RNNCoreAnnotations.getPredictedClass(tree);
-	                //System.out.println(sentiment);
-	                obj.put("Sentence", sentence);
-	                obj.put("Sentiment", sentiment);
-	              //  arr.add(obj);
-	                arr.add(jsonval, obj);
-jsonval=jsonval+1;
 	                String partText = sentence.toString();
-	           
-
-	                //System.out.println(partText);
 	                if (partText.length() > longest) {
 	                    mainSentiment = sentiment;
 	                    //System.out.println(+sentiment+" "+partText.length());
 	                    longest = partText.length();
-	                    //if(mainSentiment<2) {break;}
 	                }
-	                //System.out.println(arr);
-	                //arr.add(obj);
-	                //obj.put("Sentiments", arr);
-	            }
-	            //System.out.println(arr);
+	            }*/
 	        }
 
-	    /*    switch (mainSentiment) {
+	        switch (mainSentiment) {
 	        case 0:
 	            return "Very Negative";
 	        case 1:
@@ -97,8 +73,7 @@ jsonval=jsonval+1;
 	            return "Very Positive";
 	        default:
 	            return "";
-	        }*/
-	       return  arr;
+	        }
 	    }
 	 
 	 public static int findSentimentInt(String line) {
@@ -125,8 +100,3 @@ jsonval=jsonval+1;
 	        }
 
 }
-
-
-
-
-

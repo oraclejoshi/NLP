@@ -6,8 +6,9 @@ public class Main {
 		Sentiment.init();
 		
 		try{
-			get("/hello/:name", (request, response) -> {
-			    return "Hello: " + Sentiment.findSentiment(request.params(("name")));
+			port(8080);
+			post("/hello/", (request, response) -> {
+			    return Sentiment.findSentiment(request.body());
 			});
 			
 		}catch(Exception e){
