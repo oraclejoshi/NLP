@@ -1,0 +1,14 @@
+{
+  "type" : "MetricCollector",
+  "reportingInterval" : 60000,
+  "reportingStartSecond" : 0,
+  "reconfigInterval" : 60000,
+  "maxLogCount" : 5,
+  "enableUnsolicitedMetric" : false,
+  "enableObjectSizeCollection" : false,
+  "enableJmx" : false,
+  "enableJson" : false,
+  "enableEngine" : true,
+  "enableJsonReport" : [ ],
+  "enableEngineReport" : [ "AppServer.ConnectionPool", "AppServer.JVM", "AppServer.AppServer", "AppServer.ThreadPool", "AppServer.Host", "Support.AgentStatus", "Support.EMStatus", "Support.ActionDiagnostic" ]
+}

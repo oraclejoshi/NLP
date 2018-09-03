@@ -1,0 +1,12 @@
+{
+  "type" : "browseragent",
+  "extensionGroups" : {
+    "default" : [ ".bmp", ".css", ".png", ".swz", ".jar", ".htm", ".dtd", ".mpeg", ".jpg", ".dat", ".mpg", ".mid", ".properties", ".js", ".ico", ".class", ".tif", ".gif", ".jpeg", ".swf", ".cur", ".woff" ]
+  },
+  "excludedContextRoots" : [ "/bea_wls_management_internal2", "/bea_wls_cluster_internal", "/bea_wls_internal", "/soa-infra", "/bea_wls_deployment_internal", "/empbs" ],
+  "excludedServletClasses" : [ "com.siebel.analytics.web.SAWBridge", "oracle.j2ee.ws.server.provider.ProviderServlet", "oracle.webcenter.content.http.GetHandlerServlet", "weblogic.servlet.CGIServlet" ],
+  "excludedServletPackages" : [ "weblogic.wsee.jaxws.", "weblogic.wsee.server.servlet.", "com.bea.wli.sb.transports." ],
+  "defaultConfig" : {
+    "extensionGroup" : "default"
+  }
+}
