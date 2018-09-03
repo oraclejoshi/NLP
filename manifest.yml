@@ -1,0 +1,11 @@
+
+      
+	  
+{
+"runtime": {
+"majorVersion": "8"
+},
+"command": "java -jar samJsonP-0.0.1-SNAPSHOT.jar javaagent -jar NLP/apmagent/lib/system/ApmAgentInstrumentation.jar",
+"notes": "Mock Service"
+}  
+    
